@@ -4,8 +4,9 @@
   "description": "This is a solution implemented regarding the Dazn technical interview. By Jose Manuel Villegas Garcia",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "start": "nodemon server.js"
+    "test": "mocha test/**/**/*.spec.js",
+    "start": "nodemon server.js",
+    "database-init": "node ./src/db/dbInstanciate.js"
   },
   "dependencies": {
     "axios": "0.27.2",
@@ -17,7 +18,10 @@
   "author": "Jose Manuel Villegas Garcia",
   "license": "ISC",
   "devDependencies": {
+    "chai": "^4.3.6",
     "mocha": "^10.0.0",
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "stub": "^0.3.2",
+    "sinon": "^14.0.0"
   }
 }

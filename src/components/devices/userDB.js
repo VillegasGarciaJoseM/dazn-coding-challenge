@@ -37,27 +37,29 @@ crudOperations.update = (user) => {
     })
 }
 
-crudOperations.findById = (userId) => {
+crudOperations.findById = (id) => {
     db.loadDatabase();
 
     return new Promise((resolve, reject) => {
-        db.findOne({ userId: userId }, (err, doc) => {
+        db.findOne({ userId: id }, (err, doc) => {
             if (err) {
                 reject({ success: false, err: err })
             }
             if (!doc) {
-                resolve({ success: false });
+                reject({ success: false });
             }
             resolve({ success: true, user: doc });
         })
     })
 }
+
 crudOperations.addDeviceToUser = (user, device) => {
     db.loadDatabase();
 
     return new Promise((resolve, reject) => {
         db.update({ userId: user.userId }, { $addToSet: { devices: device } }, (err, numReplaced) => {
             if (err) {
+                // TODO: log err
                 console.log(err);
                 reject({ success: false, err: err });
             }
@@ -74,18 +76,41 @@ crudOperations.deleteDeviceFromUser = (user, device) => {
     db.loadDatabase();
 
     return new Promise((resolve, reject) => {
-        db.update({ userId: user.userId }, { $pull: { "devices.deviceId": device.deviceId } }, {}, (err, numReplaced) => {
+        db.update({ userId: user.userId }, { $pull: { devices: device } }, {}, (err, numReplaced) => {
             if (err) {
                 //TODO: log an error
                 console.log(err)
-                reject({ success: false, err: err })
+                reject({ success: false, message: err })
             }
             if (numReplaced > 1) {
-                resolve({ success: false, errorMessage: "More than one User has been deleted" })
+                resolve({ success: false, message: "More than one Device has been deleted" })
             }
 
-            resolve({ success: true })
+            resolve({ success: true, message: "Device removed successfully"})
         })
     })
 }
 
+crudOperations.changePlayability = (user, device, activate) => {
+    db.loadDatabase();
+
+    return new Promise((resolve, reject) => {
+        db.update({ userId: user.userId }, { $pull: { devices: device } }, {}, (err, numReplaced) => {
+            if(err){
+                reject({success: false, message: err})
+                console.log(err);
+            }
+            device.playable = activate
+            db.update({ userId: user.userId }, { $addToSet: { devices: device} }, {}, (err, numReplaced) => {
+                if (err) {
+                    //TODO: log an error
+                    reject({ success: false, message: err })
+                }
+                if (numReplaced > 1) {
+                    reject({ success: false, message: "More than one register has been deleted" })
+                }
+                resolve({ success: true, message: "Device changed successfully" })
+            })
+        });
+    })
+}

@@ -114,7 +114,6 @@ userService.deleteDevice = (user, device) => {
 
     return userDB.deleteDeviceFromUser(user, device)
         .then(({success, message}) => {
-            
             return {code: 200, message: message}
         })
         .catch(err=>{

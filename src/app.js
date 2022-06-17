@@ -48,7 +48,7 @@ app.post('/device/delete', jsonParser, (req, res) => {
 })
 
 app.all('*', (req, res) => {
-    res.status(404).send("Page not found!")
+    res.status(404).json({error: "Endpoint not found"})
 })
 
 module.exports = app;

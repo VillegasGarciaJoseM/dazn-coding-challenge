@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test/**/**/*.spec.js",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "database-init": "node ./src/db/dbInstanciate.js"
   },
   "dependencies": {
     "axios": "0.27.2",

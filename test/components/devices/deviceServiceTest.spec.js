@@ -1,9 +1,8 @@
-var assert = require('assert');
-var userService = require('../../../components/devices/userService.js')
+var userService = require('./../../../src/components/devices/userService.js')
 var expect = require('chai').expect
 var sinon = require('sinon');
-var userDB = require('../../../components/devices/userDB.js')
-var entitlementsAPI = require('../../../components/externalAPI/entitlementsAPI.js')
+var userDB = require('../../../src/components/devices/userDB.js')
+var entitlementsAPI = require('../../../src/components/externalAPI/entitlementsAPI.js')
 describe('hooks', function () {
   before(() => {
     //inicializar la base de datos

@@ -37,11 +37,11 @@ crudOperations.update = (user) => {
     })
 }
 
-crudOperations.findById = (userId) => {
+crudOperations.findById = (id) => {
     db.loadDatabase();
 
     return new Promise((resolve, reject) => {
-        db.findOne({ userId: userId }, (err, doc) => {
+        db.findOne({ userId: id }, (err, doc) => {
             if (err) {
                 reject({ success: false, err: err })
             }
